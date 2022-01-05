@@ -100,7 +100,7 @@ jobs:
             resource-file-path: "deployements/deployment.yml"
             resource-name: deployment/ramcapstoneproject
         - kubernetes/create-or-update-resource:
-            resource-file-path: "deployments/service.yml"
+            resource-file-path: "deployements/service.yml"
             resource-name: Service/ramcapstoneproject    
 
     test-application:
