@@ -131,4 +131,6 @@ workflows:
   default:
     jobs:
       - run-lint
-      
+      - push-docker-image:
+          requires:
+              - "run-lint"
