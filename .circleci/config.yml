@@ -48,7 +48,7 @@ jobs:
       steps:
         - checkout
         - run:
-            name: Inatall eksctl
+            name: Install eksctl
             command: |
               if which eksctl > /dev/null; then
               echo "eksctl is already installed"
@@ -75,7 +75,7 @@ jobs:
             node-type: t2.small
             nodes-max: 2
             ssh-access: false
-            ssh-public-key: 'udacity-fresh-working-key'   
+            ssh-public-key: 'udacitycapstone'   
     # deploy app using templates               
     deploy-application:
       executor: aws-eks/python3
@@ -134,3 +134,7 @@ workflows:
       - push-docker-image:
           requires:
               - "run-lint"
+      - create-small-cluster:
+          cluster-name: ramcapstoneproject-cluster-deployment-v1
+          requires:
+            - "push-docker-image"
