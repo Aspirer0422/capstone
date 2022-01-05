@@ -76,8 +76,8 @@ jobs:
             nodes-max: 2
             ssh-access: false
             ssh-public-key: 'udacitycapstone'   
-    # deploy app using templates               
-    deploy-application:
+    # Create Deployement 
+    create-deployment:
       executor: aws-eks/python3
       parameters:
         default-aws-region:
@@ -138,6 +138,6 @@ workflows:
       #    cluster-name: ramcapstoneproject-cluster-deployment-v1
       #    requires:
       #      - "push-docker-image"
-      - create-deplotyment:
+      - create-deployment:
           cluster-name: ramcapstoneproject-cluster-deployment-v1
           aws-region: $AWS_DEFAULT_REGION
