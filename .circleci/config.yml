@@ -133,13 +133,6 @@ workflows:
       - create-deployment:
           cluster-name: ramcapstoneproject-cluster-deployment-v1
           aws-region: $AWS_DEFAULT_REGION
-          
-      #- run-lint
-      #- push-docker-image:
-      #    requires:
-              - "run-lint"
-      #- create-small-cluster:
-      #    cluster-name: ramcapstoneproject-cluster-deployment-v1
-      #    requires:
-      #      - "push-docker-image"
+
+     
       
