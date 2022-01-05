@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ramcapstoneproject
+  labels:
+    app: ramcapstoneproject
+spec:
+  selector:
+    matchLabels:
+      app: ramcapstoneproject
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: ramcapstoneproject
+    spec:
+      containers:
+      - name: ramcapstoneproject
+        image: ramujai06/ramcapstoneproject
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 80
