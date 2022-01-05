@@ -28,15 +28,15 @@ jobs:
       steps:
         - checkout
         - setup_remote_docker:
-            version: 19.03.13
+            version: 1.0
         - run:
             name: Push Docker Image
             command: |
+              export IMAGE_NAME=ramcapstoneproject
               export TAG=v${CIRCLE_BUILD_NUM}
-              export IMAGE_NAME=raghucapstoneprj
-              docker build -t sraghuraman27/$IMAGE_NAME .
-              docker login -u sraghuraman27 -p Raghu!6224 
-              docker push sraghuraman27/$IMAGE_NAME
+              docker build -t ramujai06/$IMAGE_NAME .
+              docker login -u ramujai06 -p OpenDocker1! 
+              docker push ramujai06/$IMAGE_NAME
   # creating kubernetes cluster in aws            
     create-small-cluster:
       executor: aws-eks/python3
@@ -98,10 +98,10 @@ jobs:
         - kubernetes/create-or-update-resource:
             get-rollout-status: true
             resource-file-path: "deployments/deployment.yml"
-            resource-name: deployment/raghucapstoneprj
+            resource-name: deployment/ramcapstoneproject
         - kubernetes/create-or-update-resource:
             resource-file-path: "deployments/service.yml"
-            resource-name: Service/raghucapstoneprj    
+            resource-name: Service/ramcapstoneproject    
 
     test-application:
         executor: aws-eks/python3
@@ -131,28 +131,4 @@ workflows:
   default:
     jobs:
       - run-lint
-      - push-docker-image:
-          requires:
-            - "run-lint"
-      - create-small-cluster:
-          cluster-name: raghucapstoneprj-cluster-deployment-v1
-          requires:
-            - "push-docker-image"
-      - deploy-application:
-          cluster-name: raghucapstoneprj-cluster-deployment-v1
-          aws-region: $AWS_DEFAULT_REGION
-          requires:
-            - create-small-cluster
-#            - push-docker-image
-      - aws-eks/update-container-image:
-          cluster-name: raghucapstoneprj-cluster-deployment-v1
-          container-image-updates: 'raghucapstoneprj=raghucapstoneprj:latest'
-          record: true
-          requires:
-            - deploy-application
-          resource-name: deployment/raghucapstoneprj      
-      - test-application:
-          cluster-name: raghucapstoneprj-cluster-deployment-v1
-          aws-region: $AWS_DEFAULT_REGION
-          requires:
-            - aws-eks/update-container-image
+      
