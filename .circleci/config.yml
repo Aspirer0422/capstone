@@ -135,17 +135,17 @@ workflows:
           requires:
               - "run-lint"
       - create-kubernetes-cluster:
-            cluster-name: ramcapstoneproject-cluster-deployment-v1
+            cluster-name: ramcapstoneproject-cluster-deployment-v2
             requires:
               - push-docker-image		
       - create-deployment:
-            kube-cluster-name: ramcapstoneproject-cluster-deployment-v1
+            kube-cluster-name: ramcapstoneproject-cluster-deployment-v2
             default-aws-region: $AWS_DEFAULT_REGION
             requires:
               - create-kubernetes-cluster
               - push-docker-image
       - aws-eks/update-container-image:
-            cluster-name: ramcapstoneproject-cluster-deployment-v1
+            cluster-name: ramcapstoneproject-cluster-deployment-v2
             container-image-updates: 'ramcapstoneproject=ramcapstoneproject:latest'
             record: true
             requires:
@@ -153,7 +153,7 @@ workflows:
             resource-name: deployment/ramcapstoneproject
     
       - test-application:
-            cluster-name: ramcapstoneproject-cluster-deployment-v1
+            cluster-name: ramcapstoneproject-cluster-deployment-v2
             aws-region: $AWS_DEFAULT_REGION
             requires:
               - aws-eks/update-container-image
