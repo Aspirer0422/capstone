@@ -142,11 +142,19 @@ jobs:
 workflows:
   default:
     jobs:
+      - run-lint
+      - push-docker-image:
+          requires:
+              - "run-lint"
+      - create-kubernetes-cluster:
+            cluster-name: ramcapstoneproject-cluster-deployment-v1
+            requires:
+              - push-docker-image
       - create-deployment:
             cluster-name: ramcapstoneproject-cluster-deployment-v1
             aws-region: $AWS_DEFAULT_REGION
-#            requires:
-#              - create-kubernetes-cluster
+            requires:
+              - create-kubernetes-cluster
             
       - pull-docker-image:
             requires:
