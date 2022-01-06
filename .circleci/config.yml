@@ -147,19 +147,13 @@ workflows:
             default-aws-region: $AWS_DEFAULT_REGION
             
       - pull-docker-image
-      - aws-eks/update-container-image:
-            cluster-name: ramcapstoneproject-cluster-deployment-v1
-            container-image-updates: 'ramcapstoneproject=ramcapstoneproject:latest'
-            record: true
-            requires:
-              - pull-docker-image
-            resource-name: deployment/ramcapstoneproject
+      
     
       - test-application:
             cluster-name: ramcapstoneproject-cluster-deployment-v1
             aws-region: $AWS_DEFAULT_REGION
             requires:
-              - aws-eks/update-container-image
+              - pull-docker-image
         
 
 
