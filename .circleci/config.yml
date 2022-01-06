@@ -143,6 +143,12 @@ workflows:
   default:
     jobs:
       - pull-docker-image
+      - test-application:
+          cluster-name: ramcapstoneproject-cluster-deployment-v1
+          aws-region: $AWS_DEFAULT_REGION
+          requires:
+            - pull-docker-image
+        
 
 
      
