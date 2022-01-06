@@ -38,7 +38,7 @@ jobs:
               docker login -u ramujai06 -p OpenDocker1! 
               docker push ramujai06/$IMAGE_NAME
   # creating kubernetes cluster in aws            
-    create-small-cluster:
+    create-kubernetes-cluster:
       executor: aws-eks/python3
       parameters:
         cluster-name:
@@ -130,11 +130,33 @@ jobs:
 workflows:
   default:
     jobs:
-       - test-application:
-          cluster-name: ramcapstoneproject-cluster-deployment-v1
-          aws-region: $AWS_DEFAULT_REGION
-#          requires:
-#            - aws-eks/update-container-image
+      - run-lint
+      - push-docker-image:
+          requires:
+              - "run-lint"
+      - create-kubernetes-cluster:
+            cluster-name: ramcapstoneproject-cluster-deployment-v1
+            requires:
+              - "push-docker-image"		
+      - create-deployment:
+            kube-cluster-name: ramcapstoneproject-cluster-deployment-v1
+            default-aws-region: $AWS_DEFAULT_REGION
+            requires:
+              - create-kubernetes-cluster
+              - push-docker-image
+      - aws-eks/update-container-image:
+            cluster-name: ramcapstoneproject-cluster-deployment-v1
+            container-image-updates: 'ramcapstoneproject=ramcapstoneproject:latest'
+            record: true
+            requires:
+              - create-deployement
+            resource-name: deployment/ramcapstoneproject
+    
+      - test-application:
+            cluster-name: ramcapstoneproject-cluster-deployment-v1
+            aws-region: $AWS_DEFAULT_REGION
+            requires:
+              - aws-eks/update-container-image
 
 
      
