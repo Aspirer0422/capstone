@@ -149,7 +149,7 @@ workflows:
             container-image-updates: 'ramcapstoneproject=ramcapstoneproject:latest'
             record: true
             requires:
-              - create-deployement
+              - create-deployment
             resource-name: deployment/ramcapstoneproject
     
       - test-application:
