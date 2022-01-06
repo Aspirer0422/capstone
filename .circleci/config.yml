@@ -137,7 +137,7 @@ workflows:
       - create-kubernetes-cluster:
             cluster-name: ramcapstoneproject-cluster-deployment-v1
             requires:
-              - "push-docker-image"		
+              - push-docker-image		
       - create-deployment:
             kube-cluster-name: ramcapstoneproject-cluster-deployment-v1
             default-aws-region: $AWS_DEFAULT_REGION
