@@ -142,7 +142,6 @@ jobs:
 workflows:
   default:
     jobs:
-      	
       - create-deployment:
             kube-cluster-name: ramcapstoneproject-cluster-deployment-v1
             default-aws-region: $AWS_DEFAULT_REGION
