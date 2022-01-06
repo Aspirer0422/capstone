@@ -154,7 +154,7 @@ workflows:
 
       - aws-eks/update-container-image:
             cluster-name: ramcapstoneproject-cluster-deployment-v1
-            container-image-updates: ramcapstoneproject=ramcapstoneproject:latest
+            container-image-updates: ramcapstoneproject=ramujai06/ramcapstoneproject:latest
             requires:
               - create-deployment
             resource-name: deployment/ramcapstoneproject
