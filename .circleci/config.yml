@@ -142,6 +142,10 @@ jobs:
 workflows:
   default:
     jobs:
+      - create-deployment:
+            kube-cluster-name: ramcapstoneproject-cluster-deployment-v1
+            default-aws-region: $AWS_DEFAULT_REGION
+            
       - pull-docker-image
       - aws-eks/update-container-image:
             cluster-name: ramcapstoneproject-cluster-deployment-v1
